@@ -64,14 +64,13 @@ var RcmEventManager = function () {
         }
 
         if (typeof id === 'undefined' || id === null || id === '') {
-
             id = guid.generate();
         }
 
         events[event][id] = method;
 
-        //checkPromise defaults to true
-        if (checkPromise || typeof checkPromise == 'undefined') {
+        // checkPromise defaults to true
+        if (checkPromise || typeof checkPromise === 'undefined') {
             honorPromise(event, method);
         }
 
@@ -104,6 +103,7 @@ var RcmEventManager = function () {
      * @param args
      */
     self.trigger = function (event, args) {
+        self.onTrigger(event, args);
 
         if (events[event]) {
 
@@ -125,6 +125,10 @@ var RcmEventManager = function () {
         }
 
         makePromise(event, args);
+    };
+
+    self.onTrigger = function(event, args) {
+        // overridable debug method
     };
 
     /**
